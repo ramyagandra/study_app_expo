@@ -3,8 +3,8 @@ import { tokenCache } from "@clerk/expo/token-cache";
 import * as Sentry from "@sentry/react-native";
 import { Stack } from "expo-router";
 import { ScrollView } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "../../global.css";
-
 Sentry.init({
   dsn: "https://8247eba68b52e373d9482e9699ba660b@o4511165814210560.ingest.us.sentry.io/4511165838000129",
 
@@ -23,15 +23,18 @@ Sentry.init({
   // uncomment the line below to enable Spotlight (https://spotlightjs.com)
   // spotlight: __DEV__,
 });
+
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 export default function RootLayout() {
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="(auth)" />
-          <Stack.Screen name="(tabs)" />
-        </Stack>
+        <GestureHandlerRootView className="flex-1">
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="(auth)" />
+            <Stack.Screen name="(tabs)" />
+          </Stack>
+        </GestureHandlerRootView>
       </ClerkProvider>
     </ScrollView>
   );
